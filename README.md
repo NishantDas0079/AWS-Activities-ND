@@ -1,11 +1,11 @@
-AWS Hands-On Activities (Beginner-Friendly Guide)
+# AWS Hands-On Activities (Beginner-Friendly Guide)
 
 A consolidated set of practical AWS exercises covering Databases, AI/ML, Compute, Storage, and Cost Management. Each activity includes clear steps, commands, and concepts—ideal for beginners exploring real cloud workflows.
 
 
 ---
 
-1. Launching an Amazon RDS Database
+# 1. Launching an Amazon RDS Database
 
 Overview
 
@@ -30,22 +30,22 @@ AWS Console → RDS → “Create database”
 2. Select Engine
 
 Choose:
-
+```
 MySQL 8.x or
 
 PostgreSQL 15.x
-
+```
 
 3. Select Template
 
 Free tier (if available).
 
 4. Configuration
-
+```
 DB identifier: my-db-instance
 
 Username: admin
-
+```
 Password: create your own
 
 
@@ -74,10 +74,11 @@ PostgreSQL → 5432
 8. Add Security Group Rule
 
 Open inbound rule:
+```
 
 Type: MySQL/PostgreSQL
 Source: your-ip
-
+```
 9. Launch
 
 Click Create database.
@@ -86,25 +87,25 @@ Click Create database.
 ---
 
 CLI Verification (Optional)
-
+```
 aws rds describe-db-instances
-
+```
 
 ---
 
 Connect From EC2
 
 MySQL example:
-
+```
 mysql -h <endpoint> -u admin -p
 
 Postgres example:
 
 psql -h <endpoint> -U admin -d postgres
 
+```
 
-
-2. Amazon Bedrock – Foundation Model Inference
+# 2. Amazon Bedrock – Foundation Model Inference
 
 Overview
 
@@ -131,7 +132,7 @@ AWS Console → Bedrock → Model Access → Enable models you want.
 ---
 
 Python Example with AWS SDK
-
+```
 Install SDK:
 
 pip3 install boto3 botocore
@@ -148,19 +149,19 @@ response = client.invoke_model(
 )
 
 print(response["body"].read().decode())
-
+```
 
 ---
 
 CLI Example
-
+```
 aws bedrock-runtime invoke-model \
   --model-id anthropic.claude-v2 \
   --body '{"prompt":"Hello"}' \
   response.json
 
-
-3. AWS Budgets
+```
+# 3. AWS Budgets
 
 Overview
 
@@ -206,7 +207,7 @@ Email notification
 ---
 
 CLI Example
-
+```
 aws budgets create-budget \
 --account-id <aws-account-id> \
 --budget file://budget.json
@@ -219,9 +220,9 @@ budget.json example:
   "TimeUnit": "MONTHLY",
   "BudgetType": "COST"
 }
+```
 
-
-4. Launching an Application on EC2
+# 4. Launching an Application on EC2
 
 Overview
 
@@ -242,7 +243,7 @@ Foundation for real infra architectures
 Steps
 
 1. Launch EC2
-
+```
 AMI: Ubuntu / Amazon Linux
 
 Type: t2.micro
@@ -255,7 +256,7 @@ SSH → 22
 
 HTTP → 80
 
-
+```
 
 
 ---
@@ -263,28 +264,28 @@ HTTP → 80
 2. Install Web Server
 
 Ubuntu:
-
+```
 sudo apt update
 sudo apt install nginx -y
-
+```
 Amazon Linux:
-
+```
 sudo yum install httpd -y
 sudo systemctl start httpd
-
+```
 
 ---
 
 3. Deploy Your App
 
 Example HTML:
-
+```
 echo "<h1>Hello from EC2!</h1>" | sudo tee /var/www/html/index.html
 
-
+```
 ---
 
-5. Amazon S3 – Static Website Hosting
+# 5. Amazon S3 – Static Website Hosting
 
 Overview
 
@@ -318,14 +319,14 @@ Enable ACL (if needed)
 
 
 2. Upload Website Files
-
+```
 index.html, style.css, images, etc.
 
-
+```
 ---
 
 3. Enable Static Hosting
-
+```
 Bucket → Properties → Static website hosting
 
 Index document: index.html
@@ -337,12 +338,12 @@ http://my-static-site.s3-website-us-east-1.amazonaws.com/
 
 
 ---
-
+```
 CLI Bucket Creation
-
+```
 aws s3 mb s3://my-static-site
 
 Upload:
 
 aws s3 cp index.html s3://my-static-site --acl public-read
-
+```
